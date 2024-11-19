@@ -1,38 +1,31 @@
-# create-svelte
+# Welcome to Sticky Notes
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
+This is a small application to create sticky notes. 
+I use sticky notes to order my life with tasks, prioritization based on position, etc.
+I wanted to replicate that. 
 
-## Creating a project
+## How To Use
 
-If you're seeing this, you've probably already done this step. Congrats!
+* There's a text field in the center top of the screen. Write in a name for a set of sticky notes (IE: "stuff to do"). 
+    * If the set of sticky notes exists, it'll pull up your sticky notes. 
+    * If the set of sticky notes doesn't exist, it'll be created. 
+* There's a + button in the upper right. Hit it and a new sticky note will be created.
+* click on a sticky note to change the text.
+* select a sticky note, or multiple sticky notes, and hit 'Delete' to delete a sticky note.
+* click and drag a sticky note to move it. 
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
+## Development
 
-# create a new project in my-app
-npm create svelte@latest my-app
-```
+### running the dev code
 
-## Developing
+This is built using [svelte](https://svelte.dev/). 
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+* You'll need a working reddis DB on your computer. It'll need to be working on the Reddis default port of 6379. 
+* 'npm run dev' will bring it up on your computer. 
+* 'npm run build' will build it for deployment.
+    * To Do: figure out the adapter needed. 
 
-```bash
-npm run dev
+## Running this thing for real
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-## Building
-
-To create a production version of your app:
-
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+* You'll need to figure out for yourself how you're going to run this, either as static HTML pages, or a Javascript app running in node.js. Or something else. 
+* Again, you'll need a reddis DB accessible for the app to store sticky note sets in.
