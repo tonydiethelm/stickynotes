@@ -20,7 +20,7 @@ I wanted to replicate that.
 
 This is built using [svelte](https://svelte.dev/). 
 
-* You'll need a working reddis DB on your computer. It'll need to be working on the Reddis default port of 6379. 
+* You'll need a working [reddis](https://redis.io/) DB on your computer. It'll need to be working on the Reddis default port of 6379. 
 * 'npm run dev' will bring it up on your computer. 
 * 'npm run build' will build it for deployment.
     * To Do: figure out the adapter needed. 
@@ -28,4 +28,25 @@ This is built using [svelte](https://svelte.dev/).
 ## Running this thing for real
 
 * You'll need to figure out for yourself how you're going to run this, either as static HTML pages, or a Javascript app running in node.js. Or something else. 
-* Again, you'll need a reddis DB accessible for the app to store sticky note sets in.
+* Again, you'll need a [reddis](https://redis.io/) DB accessible for the app to store sticky note sets in.
+
+
+## Development Notes / Engineering Decisions
+
+This section has notes on the decisions made during the devlopment of this thing. 
+
+### main app
+
+The main app is under /src/routes and is +page.svelte. 
+
+### Sticky Notes format
+
+The sticky notes are saved as an array. 
+
+'[x postion, y position, z position, text]'
+
+A set of sticky notes is saved as an object, where the key is the name of the sticky note set.  
+
+'{'stuff to do': [first note, second note, etc]}'
+
+Am I sure I want to do this? It's much easier to delete items out of an object than an array, especially if I pass down an identifier. 
