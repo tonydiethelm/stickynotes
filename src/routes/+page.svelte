@@ -4,6 +4,11 @@ See the README for important notes
 
 
 <script>
+    //imports
+	import Sticky from "../lib/sticky.svelte";
+
+
+    //functions
     function placeholderFunction(){
         console.log('the button clicked.');
         //alert('the button clicked.');
@@ -14,6 +19,8 @@ See the README for important notes
 
 // function getStickySet(){}
 
+
+
 </script>
 
 
@@ -23,7 +30,17 @@ See the README for important notes
     <button onclick={placeholderFunction}>+</button>
 </div>
 
+<!--
+Need to pull the sticky notes collection and create a sticky note HTML element for
+each sticky note entry in the sticky note collection. 
 
+Pass in XY coordinates, text, etc. 
+-->
+
+<Sticky />
+<Sticky />
+<Sticky />
+<Sticky />
 
 
 <style>
