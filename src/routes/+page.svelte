@@ -8,6 +8,7 @@
     //I'll need identifiers for the sticky set, to pass to form functions. 
     //form.setName and form.whoDoesThisBelongTo
 
+    //set up state. Which I guess is just the form data? Hmm... 
 
 
     //functions
