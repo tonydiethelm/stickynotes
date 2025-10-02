@@ -1,11 +1,13 @@
-<!--
-See the README for important notes
--->
-
-
 <script>
+    //stickies are loaded from the 
+    let { data, form } = $props();
+
     //imports
 	import Sticky from "../lib/sticky.svelte";
+
+    //I'll need identifiers for the sticky set, to pass to form functions. 
+    //form.setName and form.whoDoesThisBelongTo
+
 
 
     //functions
@@ -13,45 +15,30 @@ See the README for important notes
         console.log('the button clicked.');
         //alert('the button clicked.');
     }
-// function addSticky(){}
-
-// function deleteSticky(){}
-
-// function getStickySet(){}
-
-
 
 </script>
 
 
 
-<div id='ui'>
-    <textarea placeholder='input the name of your sticky note board here' rows=1 cols='50'></textarea>
-    <button onclick={placeholderFunction}>+</button>
-</div>
-
 <!--
-Need to pull the sticky notes collection and create a sticky note HTML element for
-each sticky note entry in the sticky note collection. 
-
-Pass in XY coordinates, text, etc. 
+I need an input and a Get It button for fetching sticky sets. This will need to send the whoDoesThisBelongTo and setName.
+I need a + button to create a new sticky on a given set. This will need to send the whoDoesThisBelongTo and setName.
+I need a log in button that will do OAuth to google to get them an identity to save sticky sets under. 
 -->
 
-<Sticky />
-<Sticky />
-<Sticky />
-<Sticky />
+
+<!--
+If there's data, but no form data, display a little howto?-->
+
+<!--
+If there's form data, display a sticky for each note in the form data.
+-->
 
 
 <style>
-    #ui{
-        width: 30%;
-        margin: auto;
-        }
-    .outline{
-        outline: 5px dotted blue;
-    }
-    button{
-        font-size: x-large;
-    }
+/*
+I need to style the Get It UI to be top of the page, centered, and always on top. 
+I need to put the log in button on top right. 
+I need to put the + button.... Where? 
+*/
 </style>
