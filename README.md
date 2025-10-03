@@ -38,7 +38,18 @@ This is built using [svelte](https://svelte.dev/).
 
 This section has notes on the decisions made during the devlopment of this thing. 
 
-### main app
+
+### Data Flow
+
+User asks for a sticky set, form data sent to BE. It looks. Creates one if it's not there. 
+form data is returned, used to put stickies up. 
+user modifies stickies, here's the tricksy bit. If we're sharing state, I can't reassign the whole thing. It would break the proxy link. But I can change specific things. Do that. I have the sticky identifier sent down, I can modify the shared state. Ok. Doable.
+
+The easiest thing to do would be to just write the state every X seconds...
+But that's unneeded data if it's not new. We can get around that too by comparing to last send. But then we have to record last send. Which also isn't terrible. 
+Best is to send it whenever it changes... Position change, text change, new sticky, delete sticky. 
+There isn't a good way to do that via a form POST? Can the state be attached? Yeah, can attach to hidden state, JSONified. Ok.
+But there isn't a good way to do a form POST on position change, on text change. So, let's just write functions for those and call a fetch to a BE server. 
 
 ### Sticky Notes format
 
