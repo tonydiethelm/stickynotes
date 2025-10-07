@@ -43,7 +43,13 @@ This section has notes on the decisions made during the devlopment of this thing
 
 User asks for a sticky set, form data sent to BE. It looks. Creates one if it's not there. 
 form data is returned, used to put stickies up. 
-user modifies stickies, here's the tricksy bit. If we're sharing state, I can't reassign the whole thing. It would break the proxy link. But I can change specific things. Do that. I have the sticky identifier sent down, I can modify the shared state. Ok. Doable.
+user modifies stickies, here's the tricksy bit. 
+* If we're sharing state, I can't reassign the whole thing. It would break the proxy link. 
+* But I can change specific things. Do that. 
+* I have the sticky identifier sent down, I can modify the shared state. Ok. Doable. No. Because I can't SET the shared state.
+* I'm doing this the hard way. Use Bindable to have props communicate back to parent state. Ok! 
+* Now my largest issue is how to set state from a load or a form return. 
+
 
 The easiest thing to do would be to just write the state every X seconds...
 But that's unneeded data if it's not new. We can get around that too by comparing to last send. But then we have to record last send. Which also isn't terrible. 
