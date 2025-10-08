@@ -78,9 +78,11 @@ The sticky notes are saved as an array.
 
 A set of sticky notes is saved as an object, where the key is the name of the sticky note set and the person it belongs to.
 
-`{whoDoesThisBelongTo: 'person name', SetName: 'stuff to do', notes: [first note, second note, etc]}`
+`{whoDoesThisBelongTo: Person, whoElseCanAccess: [person1, person2, person3], SetName: 'stuff to do', notes: [first note, second note, etc]}`
 
-Am I sure I want to do this? It's much easier to delete items out of an object than an array, especially if I pass down an identifier.
+Am I sure I want to do this? It's much easier to delete items out of an object than an array, especially if I pass down an identifier. Nah, it'll leave holes. Untidy. 
+
+The entire set of sticky notes (set) will be saved as an object in Redis, the main identifier for the set will be "Setname+whodoesThisBelongTo"
 
 ### Backend
 
