@@ -90,5 +90,13 @@ The back end needs to:
 
 * connect to the reddis DB
 * provide an API that...
-    * GET the sticky collection
+    * GET the requested sticky collection
     * POST to create a new sticky note in a given collection. (and create a new collection if needed)
+
+### Problems
+
+If two people are working on a sticky set at the same time, one person's changes WILL overwrite another person's changes, depending on when they last did a GET. 
+
+* Crappy solution: Tell them to request before making changes. 
+* Slightly less crappy solution: do GET on a timer.
+* Better solution: Do this with websockets and stream the set continously to all users. 
