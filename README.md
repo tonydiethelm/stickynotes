@@ -74,11 +74,11 @@ But there isn't a good way to do a form POST on position change, on text change.
 
 The sticky notes are saved as an array. 
 
-`[x postion, y position, text]`
+`{x: number, y: number, text: "some text"}`
 
 A set of sticky notes is saved as an object, where the key is the name of the sticky note set and the person it belongs to.
 
-`{whoDoesThisBelongTo: Person, whoElseCanAccess: [person1, person2, person3], SetName: 'stuff to do', notes: [first note, second note, etc]}`
+`{whoDoesThisBelongTo: Person, whoElseCanAccess: [person1, person2, person3], setName: 'stuff to do', notes: [first note, second note, etc]}`
 
 Am I sure I want to do this? It's much easier to delete items out of an object than an array, especially if I pass down an identifier. Nah, it'll leave holes. Untidy. 
 
