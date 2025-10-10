@@ -3,10 +3,11 @@
     let { data } = $props();
 
     //imports
-	import Sticky from "../lib/sticky.svelte";
+	import Sticky from "$lib/Sticky.svelte";
 
     //set up state.
     let currentStickySet = $state({})
+    $inspect("current sticky set is:", currentStickySet);
     //I need to know what's aleady been posted for comparison so I don't send a set that isn't new. 
     let alreadyPostedStickySet;
 
@@ -31,30 +32,35 @@
     Side Effects: do a GET to the API, stick the return data into currentStickySet/state.
     return: nada
     */
-    function getTheStickySet(){
+    async function getTheStickySet(){
         console.log("getTheStickySet fired off. Get", wantedStickyInput);
+        const response = await fetch(`/api/${wantedStickyInput}+tonydiethelm@gmail.com`);
+        currentStickySet = await response.json();
+        return {success: true};
     }
 
     /*
     POST the sticky set
     Input: the sticky set object
-    Side Effects: put current sticky set object into AlreadyPostedStickySet, do a POST to the API
+    Side Effects:  do a POST to the API
     return: nada
     */
-    function postTheStickySet(){
+    async function postTheStickySet(){
         console.log("postTheStickySet fired off");
+        
 
     }
 
     /*
     Post the sticky set if currentStickySet is different than AlreadyPostedStickySet
     Input: currentStickySet, AlreadyPostedStickySet
-    Side Effects: 
+    Side Effects: post the current sticky set and put current sticky set object into AlreadyPostedStickySet
     */
     function postIfNewSet() {
         console.log("do stuff if ", currentStickySet, "and", alreadyPostedStickySet, "are different.");
         if(currentStickySet != alreadyPostedStickySet){
-            placeholderFunction()
+            const didItWork = postTheStickySet();
+            alreadyPostedStickySet = currentStickySet;
         };
         return null;
     };
@@ -70,7 +76,7 @@
 
 
     /*
-    Call a timer every X second to run postIfNewSet. set high in testing. 
+    Call a timer every X second to run postIfNewSet. set high in testing. Currently commented out, as I don't need it until I get to POSTing the sets to BE.
     */
     //const intervalID = setInterval(postIfNewSet, 10000);
 
@@ -99,18 +105,26 @@ I need instructions in the background of the center screen.
     </ul>
 </div>
 
-<div id="login">
-
-</div>
-
-<div id="getStickies">
+<div id="UI">
     <input type='text' bind:value={wantedStickyInput}>
     <button onclick={getTheStickySet}>Get the sticky set</button>
+    <button onclick={createNewSticky}>New Sticky</button>
+    <br>
+    People Allowed:<input type='text' bind:value={peopleAllowedInput}>
 </div>
 
-<div id="New Sticky">
-    <button onclick={createNewSticky}>New Sticky</button>
-</div>
+
+<!--
+I need to use an EACH block to create the stickies in state on the page. 
+-->
+
+{#each currentStickySet.notes, counter}
+    <Sticky bind:currentStickySet={currentStickySet} counter={counter}/>
+{/each}
+
+
+
+
 
 
 
@@ -122,10 +136,41 @@ I need to put the + button.... Where?
 center the instructions div in the center of the screen.
 */
 
+
+
 #instructions {
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: -2;
+}
+#UI{
     z-index: -1;
 }
+
+
+
+/*
+This is for the stickies
+*/
+@import url('https://fonts.googleapis.com/css2?family=Annie+Use+Your+Telescope&display=swap');
+
+    Sticky {
+        background-color: #feff9c;
+        color: black;
+        font-family: 'Annie Use Your Telescope', serif;
+        font-size: 2em;
+        height: 7em;
+        width: 7em;
+        padding: 1em;
+        box-shadow: 0em 1em 1em gray;
+    }
+
+    Sticky:nth-child(even){
+        transform: rotate(-4deg);
+    }
+
+    Sticky:nth-child(3n){
+        transform: rotate(5deg);
+    }
 </style>
