@@ -115,9 +115,10 @@ I need instructions in the background of the center screen.
 
 
 <!--
-I need to use an EACH block to create the stickies in state on the page. 
+I need to use an EACH block to create the stickies in state on the page.
+pass the counter down so it can accurately index. Not in state.
+bind to current sticky set so each sticky can affect state/sticky set.
 -->
-
 {#each currentStickySet.notes, counter}
     <Sticky bind:currentStickySet={currentStickySet} counter={counter}/>
 {/each}
@@ -149,28 +150,4 @@ center the instructions div in the center of the screen.
 }
 
 
-
-/*
-This is for the stickies
-*/
-@import url('https://fonts.googleapis.com/css2?family=Annie+Use+Your+Telescope&display=swap');
-
-    Sticky {
-        background-color: #feff9c;
-        color: black;
-        font-family: 'Annie Use Your Telescope', serif;
-        font-size: 2em;
-        height: 7em;
-        width: 7em;
-        padding: 1em;
-        box-shadow: 0em 1em 1em gray;
-    }
-
-    Sticky:nth-child(even){
-        transform: rotate(-4deg);
-    }
-
-    Sticky:nth-child(3n){
-        transform: rotate(5deg);
-    }
 </style>
