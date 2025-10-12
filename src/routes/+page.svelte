@@ -9,7 +9,7 @@
     let currentStickySet = $state({})
     $inspect("current sticky set is:", currentStickySet);
     //I need to know what's aleady been posted for comparison so I don't send a set that isn't new. 
-    let alreadyPostedStickySet;
+    let alreadySavedStickySet;
 
 
     //I need to keep track of the wantedSticky input and the PeopleAllowed input.
@@ -45,8 +45,8 @@
     Side Effects:  do a POST to the API
     return: nada
     */
-    async function postTheStickySet(){
-        console.log("postTheStickySet fired off");
+    async function saveTheStickySet(){
+        console.log("saveTheStickySet fired off");
         
 
     }
@@ -56,11 +56,11 @@
     Input: currentStickySet, AlreadyPostedStickySet
     Side Effects: post the current sticky set and put current sticky set object into AlreadyPostedStickySet
     */
-    function postIfNewSet() {
-        console.log("do stuff if ", currentStickySet, "and", alreadyPostedStickySet, "are different.");
-        if(currentStickySet != alreadyPostedStickySet){
-            const didItWork = postTheStickySet();
-            alreadyPostedStickySet = currentStickySet;
+    function saveIfNewSet() {
+        console.log("do stuff if ", currentStickySet, "and", alreadySavedStickySet, "are different.");
+        if(currentStickySet != alreadySavedStickySet){
+            const didItWork = saveTheStickySet();
+            alreadySavedStickySet = currentStickySet;
         };
         return null;
     };
@@ -71,7 +71,11 @@
     return: nada
     */
     function createNewSticky(){
-
+        //create a blank sticky. 
+        const newSticky = {x: 100, y: 100, text: "new"};
+        //add it onto the current sticky set.
+        currentStickySet.notes.push(newSticky);
+        return {success: true};
     }
 
 
