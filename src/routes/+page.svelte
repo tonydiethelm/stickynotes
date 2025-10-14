@@ -71,6 +71,7 @@
     return: nada
     */
     function createNewSticky(){
+        console.log("new sticky button was pushed");
         //create a blank sticky. 
         const newSticky = {x: 100, y: 100, text: "new"};
         //add it onto the current sticky set.
@@ -97,17 +98,6 @@ I need instructions in the background of the center screen.
 -->
 
 
-<div id="instructions">
-    <ul>
-        <li>sign in by clicking the little face button on the upper right.</li>
-        <li>type the name of your sticky notes set and hit "get my sticky notes" and your sticky notes will appear.</li>
-        <li>hit the "add sticky" button to add a new sticky note.</li>
-        <li>type in it, drag it whereever you want, no worries.</li>
-        <li>you can type the emails of people you want to share this sticky note set with in the input field under the little face button.</li>
-        <li>Everything auto saves every second, no worries.</li>
-
-    </ul>
-</div>
 
 <div id="UI">
     <input type='text' bind:value={wantedStickyInput}>
@@ -124,11 +114,12 @@ pass the counter down so it can accurately index. Not in state.
 bind to current sticky set so each sticky can affect state/sticky set.
 -->
 {#each currentStickySet.notes, counter}
-    <Sticky bind:currentStickySet={currentStickySet} counter={counter}/>
+    <Sticky bind:currentStickySet={currentStickySet} counter={counter} 
+    style="position:absolute; 
+    left: {currentStickySet.notes[counter].x}px; 
+    top: {currentStickySet.notes[counter].y}px;"
+    />
 {/each}
-
-
-
 
 
 
@@ -143,14 +134,12 @@ center the instructions div in the center of the screen.
 
 
 
-#instructions {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: -2;
-}
+
 #UI{
-    z-index: -1;
+    z-index: 10;
+    position: absolute;
+    right: 1em;
+    top: 1em;
 }
 
 

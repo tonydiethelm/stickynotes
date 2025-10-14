@@ -25,7 +25,7 @@ class StickySet {
         this.name = setName;
         this.whoDoesThisBelongTo = whoDoesThisBelongTo;
         this.whoElseCanAccess = [];
-        this.notes = [{x: 0, y: 0, text: "I'm an example Sticky. Change me, delete me. :D"}, {x: 100, y: 100, text: "Moar!"}];
+        this.notes = [{x: 100, y: 200, text: "I'm an example Sticky. Change me, delete me. :D"}, {x: 400, y: 500, text: "Moar!"}];
     }
 }
 
