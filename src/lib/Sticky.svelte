@@ -5,17 +5,15 @@
     let left = $derived(currentStickySet.notes[props.counter].x);
     let top = $derived(currentStickySet.notes[props.counter].y);
     //get deltas between cursor and left/top
-    let leftDelta;
-    let topDelta;
+    let pointerToStickyLeftDelta;
+    let pointerToStickyTopDelta;
     let isTheStickyMoving = false;
 
     //need function to remove sticky from the set.
     //use props.counter to properly index.
     function removeSticky(){
         //console.log("X was pushed on sticky", props.counter);
-        //we have the index from props.
-        //splice this out of the currentStickySet
-        //array.splice(index of element we want to remove, 1 element)
+        //splice this out of the currentStickySet - array.splice(index of element we want to remove, 1 element)
         currentStickySet.notes.splice(props.counter, 1)
         return {success: true};
     }
@@ -23,6 +21,28 @@
     //Toggle if sticky is being moved or not.
     function toggleIfStickyIsMoving () {
         isTheStickyMoving = !isTheStickyMoving;
+    }
+
+    //on mouse down, grab the deltas betwen the pointer X,Y and the sticky X,Y, and toggle if sticky is moving. 
+    function onpointerdown (event) {
+        pointerToStickyLeftDelta = currentStickySet.notes[props.counter].x - event.clientX
+        pointerToStickyTopDelta = currentStickySet.notes[props.counter].y - event.clientY 
+        toggleIfStickyIsMoving();
+    }
+
+    //on pointer move, ONLY DO THIS IF isTheStickyMoving is true! 
+    function onpointermove (event) {
+        if(isTheStickyMoving){
+            currentStickySet.notes[props.counter].x = event.clientX + pointerToStickyLeftDelta;
+            currentStickySet.notes[props.counter].y = event.clientY + pointerToStickyTopDelta;
+        }
+    }
+
+    //on pointer up, toggle if sticky is moving to false. 
+    //add in saving to DB?
+    function onpointerup () {
+        toggleIfStickyIsMoving();
+        //send the currentstickyset to db?
     }
 
 </script>
@@ -38,22 +58,8 @@ on mouse move IF MOVING IS SET, change left/right positions above.
 on mouse up, write new left/right positions to currentStickySet and set "moving" variable to false.
 -->
 
-<div 
-    class="sticky" 
-    style="position:absolute; top:{top}px; left:{left}px;"
-    onmousedown={(event) => {
-		leftDelta = event.clientX-left;
-		topDelta = top-event.clientY;
-	}}
-    onmousemove={(event) => {
-        left = event.clientX-leftDelta;
-        top = event.clientY+topDelta
-    }}
-    onmouseup={(event) => {
-        currentStickySet.notes[props.counter].x = left;
-        currentStickySet.notes[props.counter].y = top;
-    }}
-    >
+<div class="sticky" style="position:absolute; top:{top}px; left:{left}px;">
+    <div id="grabbable" {onpointerdown} {onpointermove} {onpointerup}></div>
     <button onclick={removeSticky}>X</button>
     <textarea bind:value={currentStickySet.notes[props.counter].text}></textarea>
 </div>
@@ -101,5 +107,10 @@ on mouse up, write new left/right positions to currentStickySet and set "moving"
         resize: none;
         border: none;
         outline: none;
+    }
+
+    #grabbable {
+        height: 1em;
+        border: solid red;
     }
 </style>
