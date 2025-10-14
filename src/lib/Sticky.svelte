@@ -20,19 +20,23 @@
 
     //Toggle if sticky is being moved or not.
     function toggleIfStickyIsMoving () {
+        //console.log("sticky moving is toggled!");
         isTheStickyMoving = !isTheStickyMoving;
     }
 
     //on mouse down, grab the deltas betwen the pointer X,Y and the sticky X,Y, and toggle if sticky is moving. 
     function onpointerdown (event) {
+        //console.log("pointer is down!");
         pointerToStickyLeftDelta = currentStickySet.notes[props.counter].x - event.clientX
         pointerToStickyTopDelta = currentStickySet.notes[props.counter].y - event.clientY 
-        toggleIfStickyIsMoving();
+        isTheStickyMoving = true;
     }
 
     //on pointer move, ONLY DO THIS IF isTheStickyMoving is true! 
     function onpointermove (event) {
+        //console.log("pointer is moving over the sticky")
         if(isTheStickyMoving){
+            //console.log("sticky is moving!");
             currentStickySet.notes[props.counter].x = event.clientX + pointerToStickyLeftDelta;
             currentStickySet.notes[props.counter].y = event.clientY + pointerToStickyTopDelta;
         }
@@ -41,7 +45,8 @@
     //on pointer up, toggle if sticky is moving to false. 
     //add in saving to DB?
     function onpointerup () {
-        toggleIfStickyIsMoving();
+        //console.log("pointer is up!")
+        isTheStickyMoving = false;
         //send the currentstickyset to db?
     }
 
@@ -69,6 +74,7 @@ on mouse up, write new left/right positions to currentStickySet and set "moving"
 
     @import url('https://fonts.googleapis.com/css2?family=Annie+Use+Your+Telescope&display=swap');
 
+
     .sticky {
         background-color: #feff9c;
         color: black;
@@ -76,7 +82,7 @@ on mouse up, write new left/right positions to currentStickySet and set "moving"
         font-size: 2em;
         height: 6em;
         width: 6em;
-        padding: 1em;
+        padding: .5em 1em 1em 1em;
         box-shadow: 0em 1em 1em gray;
     }
 
@@ -111,6 +117,7 @@ on mouse up, write new left/right positions to currentStickySet and set "moving"
 
     #grabbable {
         height: 1em;
-        border: solid red;
+        width: 90%;
+        display: inline-block; /*I want the X to sit next to this, inline.*/
     }
 </style>

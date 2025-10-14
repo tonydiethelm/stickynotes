@@ -140,7 +140,21 @@ center the instructions div in the center of the screen.
     position: absolute;
     right: 1em;
     top: 1em;
+    border: solid lightseagreen .5em;
+    border-radius: 1em;
+    padding: 1em;
+    font-family: 'Annie Use Your Telescope', serif;
+    font-size: 1.5em;
 }
 
+input{
+    font-family: 'Annie Use Your Telescope', serif;
+    font-size: 1em;
+}
+
+button{
+    font-family: 'Annie Use Your Telescope', serif;
+    font-size: 1em;
+}
 
 </style>

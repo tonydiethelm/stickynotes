@@ -68,7 +68,17 @@ But that's unneeded data if it's not new. We can get around that too by comparin
 
 Best is to send it whenever it changes... Position change, text change, new sticky, delete sticky. 
 There isn't a good way to do that via a form POST? Can the state be attached? Yeah, can attach to hidden state, JSONified. Ok.
-But there isn't a good way to do a form POST on position change, on text change. So, let's just write functions for those and call a fetch to a BE API server. 
+But there isn't a good way to do a form POST on position change, on text change. 
+
+So, let's just write functions for those and call a fetch to a BE API server. 
+
+I really only need to send data to the BE when:
+
+- finish typing in the input. Use onBlur event.
+- move a sticky. Use pointerup event. 
+- don't care about a new sticky until it has text in it. 
+- add a person to the people allowed list. use OnBlur event. 
+- 
 
 ### Sticky Notes format
 
