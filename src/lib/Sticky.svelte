@@ -1,12 +1,10 @@
 <script>
     let { currentStickySet = $bindable(), ...props} = $props();
 
-    //get left and top positions for the Sticky.
-    let left = $derived(currentStickySet.notes[props.counter].x);
-    let top = $derived(currentStickySet.notes[props.counter].y);
-    //get deltas between cursor and left/top
+    //deltas between cursor and left/top
     let pointerToStickyLeftDelta;
     let pointerToStickyTopDelta;
+    //tracks when the sticky SHOULD be moving.
     let isTheStickyMoving = false;
 
     //need function to remove sticky from the set.
@@ -18,12 +16,7 @@
         return {success: true};
     }
 
-    //Toggle if sticky is being moved or not.
-    function toggleIfStickyIsMoving () {
-        //console.log("sticky moving is toggled!");
-        isTheStickyMoving = !isTheStickyMoving;
-    }
-
+    
     //on mouse down, grab the deltas betwen the pointer X,Y and the sticky X,Y, and toggle if sticky is moving. 
     function onpointerdown (event) {
         //console.log("pointer is down!");

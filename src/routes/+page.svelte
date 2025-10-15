@@ -5,7 +5,9 @@
     //imports
 	import Sticky from "$lib/Sticky.svelte";
 
-    //set up state.
+    //set up initial state.
+    //this will get overwritten when they pull a sticky set.
+    //using this as instructions
     let currentStickySet = $state({notes: [{x: 400, y: 400, text: "It auto saves."},
             {x: 110, y: 375, text: "New Sticky is self explanatory."},
             {x: 700, y: 75, text: "put emails in the 'people allowed' to share your sticky set."},
@@ -14,8 +16,6 @@
         ]
     })
     $inspect("current sticky set is:", currentStickySet);
-    //I need to know what's aleady been posted for comparison so I don't send a set that isn't new. 
-    let alreadySavedStickySet;
 
 
     //I need to keep track of the wantedSticky input and the PeopleAllowed input.
@@ -24,13 +24,6 @@
 
 
     //functions
-
-    /*
-    Just a console log to make sure stuff is firing off. 
-    */
-    function placeholderFunction(){
-        console.log('placeholder Function ran.');
-    }
 
     /*
     Fetch the sticky set
@@ -53,23 +46,9 @@
     */
     async function saveTheStickySet(){
         console.log("saveTheStickySet fired off");
-        
-
     }
 
-    /*
-    Post the sticky set if currentStickySet is different than AlreadyPostedStickySet
-    Input: currentStickySet, AlreadyPostedStickySet
-    Side Effects: post the current sticky set and put current sticky set object into AlreadyPostedStickySet
-    */
-    function saveIfNewSet() {
-        console.log("do stuff if ", currentStickySet, "and", alreadySavedStickySet, "are different.");
-        if(currentStickySet != alreadySavedStickySet){
-            const didItWork = saveTheStickySet();
-            alreadySavedStickySet = currentStickySet;
-        };
-        return null;
-    };
+
     /*
     Create new sticky in the sticky set.
     Input: nothing
@@ -84,12 +63,6 @@
         currentStickySet.notes.push(newSticky);
         return {success: true};
     }
-
-
-    /*
-    Call a timer every X second to run postIfNewSet. set high in testing. Currently commented out, as I don't need it until I get to POSTing the sets to BE.
-    */
-    //const intervalID = setInterval(postIfNewSet, 10000);
 
 
 </script>
@@ -137,10 +110,6 @@ I need to put the log in button on top right.
 I need to put the + button.... Where? 
 center the instructions div in the center of the screen.
 */
-
-
-
-
 #UI{
     z-index: 10;
     position: absolute;
