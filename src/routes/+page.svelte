@@ -8,7 +8,7 @@
     //set up initial state.
     //this will get overwritten when they pull a sticky set.
     //using this as instructions
-    let currentStickySet = $state({notes: [{x: 400, y: 400, text: "It auto saves."},
+    let currentStickySet = $state({notes: [{x: 400, y: 400, text: "It auto saves whenever you change a sticky."},
             {x: 110, y: 375, text: "New Sticky is self explanatory."},
             {x: 700, y: 75, text: "put emails in the 'people allowed' to share your sticky set."},
             {x: 400, y: 125, text: "type a name and click 'get the sticky set'."},

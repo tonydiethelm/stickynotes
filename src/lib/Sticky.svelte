@@ -56,7 +56,7 @@ on mouse move IF MOVING IS SET, change left/right positions above.
 on mouse up, write new left/right positions to currentStickySet and set "moving" variable to false.
 -->
 
-<div class="sticky" style="position:absolute; top:{top}px; left:{left}px;">
+<div class="sticky" style="position:absolute; top:{currentStickySet.notes[props.counter].y}px; left:{currentStickySet.notes[props.counter].x}px;">
     <div id="grabbable" {onpointerdown} {onpointermove} {onpointerup}></div>
     <button onclick={removeSticky}>X</button>
     <textarea bind:value={currentStickySet.notes[props.counter].text}></textarea>
@@ -64,9 +64,7 @@ on mouse up, write new left/right positions to currentStickySet and set "moving"
 
 
 <style>
-
     @import url('https://fonts.googleapis.com/css2?family=Annie+Use+Your+Telescope&display=swap');
-
 
     .sticky {
         background-color: #feff9c;
