@@ -31,7 +31,20 @@ This is built using [svelte](https://svelte.dev/).
 * This is meant to be ran via docker. 
     * You'll need to build the image and upload to docker hub. 
     * You'll need to use docker-compose up -d in a directory with the compose.yaml file to start this up. 
-* You'll probably need a reverse proxy to point to this. 
+* You'll probably need a reverse proxy to point to this.
+* You'll need to make sure that this, running inside a docker container, can access the redis DB running on the localhost. 
+    * Try ```host.docker.internal```, but not sure that works on linux.
+    * Or try ```172.17.0.1```, which should be on the network bridge created by Docker to bridge the internal container network with the machine's network, and should represent "localhost" for the machine. 
+    * You can map a hostname to that address in a compose.yaml file. See below. 
+    
+```
+version: '3'
+services:
+  myservice:
+    image: myimage:latest
+    extra_hosts:
+      - "hostmachine:172.17.0.1"
+```
 
 
 ## Development Notes / Engineering Decisions
