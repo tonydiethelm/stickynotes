@@ -14,10 +14,23 @@ Side Effects: if they're not allowed to access that, reject it. If they are, sav
 Return: success or fail
 */
 
+/*
+I'm using Redis as the DB here. That needs to be installed on your machine! Or point it to a machine. 
+I'm using an .env file, will come from compose.yaml file when running production. 
+*/
 
 //imports
 import {json} from '@sveltejs/kit';
+import { createClient } from 'redis';
+import { redisDBLocation } from '$/env/static/private';
+
 //redis
+const redisClient = await createClient({url: `redis://${redisDBLocation}:6379`})
+    .on("error", (error) => console.log("Redis client error!!!", error))
+    .connect();
+
+
+
 
 //define the sticky set class
 class StickySet {
@@ -25,17 +38,25 @@ class StickySet {
         this.name = setName;
         this.whoDoesThisBelongTo = whoDoesThisBelongTo;
         this.whoElseCanAccess = [];
-        this.notes = [{x: 100, y: 200, text: "I'm an example Sticky. Change me, delete me. :D"}, {x: 400, y: 500, text: "Moar!"}];
+        this.notes = [{x: 100, y: 200, text: "I'm an example Sticky. Change me, delete me. :D"}];
     }
 }
 
 
 
-export async function GET() {
+export async function GET({ params }) {
     console.log("someone requested a sticky set from the BE");
     //get the params for setName and personName
+    //params.setName;
+    //params.personName;
+
     //query redis to see if it's there. 
+    const responseFromRedisGet = await redisClient.Get(`${params.setName}+${params.personName}`)
+    console.log("got this from the redis DB", responseFromRedisGet);
     //Not there? Make a blank into redis and send it back.
+    if(responseFromRedisGet = "(nil)"){
+        const responseFromRedisSet = await redisClient.set(new StickySet)
+    }
     //there? grab it and send it back. 
 
 
