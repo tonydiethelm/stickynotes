@@ -22,6 +22,12 @@
     let wantedStickyInput = $state('development');
     let peopleAllowedInput = $state('');
 
+    //to toggle UI visibile/not
+    let hidden = $state(true);
+
+    function toggleVisible () {
+        hidden = !hidden;
+    }
 
     //functions
 
@@ -30,10 +36,10 @@
     Input: user email and desired sticky set name
     Side Effects: do a GET to the API, stick the return data into currentStickySet/state.
     return: nada
+    Notes: fetch to /api/ set name + requestor name + owner name
     */
     async function getTheStickySet(){
-        console.log("getTheStickySet fired off. Get", wantedStickyInput);
-        const response = await fetch(`/api/${wantedStickyInput}+tonydiethelm@gmail.com`);
+        const response = await fetch(`/api/${wantedStickyInput}+tonydiethelm@gmail.com+tonydiethelm@gmail.com`);
         currentStickySet = await response.json();
         return {success: true};
     }
@@ -43,10 +49,22 @@
     Input: the sticky set object
     Side Effects:  do a POST to the API
     return: nada
+    Notes: fetch to /api/ set name + requestor name + owner name
+
     */
     async function saveTheStickySet(){
         console.log("saveTheStickySet fired off");
-    }
+        const response = await fetch(`/api/${currentStickySet.setName}+NA+${currentStickySet.whoDoesThisBelongTo}`, 
+            {
+                method: "POST",
+                body: JSON.stringify(currentStickySet),
+					headers: {
+						'Content-Type': 'application/json'
+					}
+            }
+        )
+        return await response.json();
+    };
 
 
     /*
@@ -56,7 +74,6 @@
     return: nada
     */
     function createNewSticky(){
-        console.log("new sticky button was pushed");
         //create a blank sticky. 
         const newSticky = {x: 100, y: 100, text: "new"};
         //add it onto the current sticky set.
@@ -79,11 +96,22 @@ I need instructions in the background of the center screen.
 
 
 <div id="UI">
-    <input type='text' bind:value={wantedStickyInput}>
-    <button onclick={getTheStickySet}>Get the sticky set</button>
+    <button 
+        class={!hidden}
+        onclick={toggleVisible}>Less UI</button>
+    <br>
+    <button
+        class={hidden}
+        onclick={toggleVisible}>More UI</button>
+    <br>
+    <input type='text' bind:value={wantedStickyInput} class={!hidden}>
+    <button onclick={getTheStickySet} class={!hidden}>Get the sticky set</button>
+    <br>
     <button onclick={createNewSticky}>New Sticky</button>
     <br>
-    People Allowed:<input type='text' bind:value={peopleAllowedInput}>
+    <div class={!hidden}>
+        People Allowed:<input type='text' bind:value={peopleAllowedInput}>
+    </div>
 </div>
 
 
@@ -130,6 +158,10 @@ input{
 button{
     font-family: 'Annie Use Your Telescope', serif;
     font-size: 1em;
+}
+
+.hidden {
+    visibility: collapse;
 }
 
 </style>

@@ -7,14 +7,42 @@
     //tracks when the sticky SHOULD be moving.
     let isTheStickyMoving = false;
 
+
+    /*
+    POST the sticky set
+    Input: the sticky set object
+    Side Effects:  do a POST to the API
+    return: nada
+    Notes: fetch to /api/ set name + requestor name + owner name
+    */
+    async function saveTheStickySet(){
+        console.log("saveTheStickySet fired off");
+        const response = await fetch(`/api/${currentStickySet.setName}+NA+${currentStickySet.whoDoesThisBelongTo}`, 
+            {
+                method: "POST",
+                body: JSON.stringify(currentStickySet),
+					headers: {
+						'Content-Type': 'application/json'
+					}
+            }
+        )
+        return await response.json();
+    };
+
+
+
+
     //need function to remove sticky from the set.
     //use props.counter to properly index.
-    function removeSticky(){
+    async function removeSticky(){
         //console.log("X was pushed on sticky", props.counter);
         //splice this out of the currentStickySet - array.splice(index of element we want to remove, 1 element)
         currentStickySet.notes.splice(props.counter, 1)
+        saveTheStickySet();
         return {success: true};
     }
+
+    
 
     
     //on mouse down, grab the deltas betwen the pointer X,Y and the sticky X,Y, and toggle if sticky is moving. 
@@ -41,6 +69,7 @@
         //console.log("pointer is up!")
         isTheStickyMoving = false;
         //send the currentstickyset to db?
+        saveTheStickySet();
     }
 
 </script>
@@ -59,7 +88,7 @@ on mouse up, write new left/right positions to currentStickySet and set "moving"
 <div class="sticky" style="position:absolute; top:{currentStickySet.notes[props.counter].y}px; left:{currentStickySet.notes[props.counter].x}px;">
     <div id="grabbable" {onpointerdown} {onpointermove} {onpointerup}></div>
     <button onclick={removeSticky}>X</button>
-    <textarea bind:value={currentStickySet.notes[props.counter].text}></textarea>
+    <textarea bind:value={currentStickySet.notes[props.counter].text} onblur={saveTheStickySet}></textarea>
 </div>
 
 
